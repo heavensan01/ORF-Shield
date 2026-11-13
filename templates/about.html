@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}How it works{% endblock %}
+{% block content %}
+<section><div class="container">
+  <div class="sec-title"><h2>How ORF Shield works</h2><p>From raw job postings to a real-time fraud verdict.</p></div>
+  <div class="grid g3">
+    <div class="card hover reveal"><h3>1 · Data &amp; pre-processing</h3><p>Job postings from multiple sources are merged, cleaned, de-duplicated and columns renamed to <code>text</code> and <code>label</code>.</p></div>
+    <div class="card hover reveal"><h3>2 · Class balancing</h3><p>Fake postings are rare. The majority class is down-sampled and the minority class is balanced before fine-tuning.</p></div>
+    <div class="card hover reveal"><h3>3 · ALBERT fine-tuning</h3><p><code>albert-base-v1</code> is fine-tuned for binary classification and evaluated with accuracy, precision, recall and F1.</p></div>
+  </div>
+  <br>
+  <div class="grid g2">
+    <div class="card reveal"><h3>Tech stack</h3><br><ul class="list"><li>Python · Flask · Flask-WTF (CSRF)</li><li>Hugging Face Transformers · PyTorch</li><li>scikit-learn · pandas</li><li>SQLite for users &amp; prediction history</li></ul></div>
+    <div class="card reveal"><h3>Modules</h3><br><ul class="list"><li>Data collection &amp; pre-processing</li><li>Model training &amp; evaluation</li><li>Real-time classification &amp; user interface</li><li>User authentication &amp; session management</li></ul></div>
+  </div>
+</div></section>
+{% endblock %}

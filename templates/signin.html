@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% from "_macros.html" import field %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="auth"><div class="card auth-card reveal">
+  <h2>Welcome back </h2><p class="sub">Sign in to analyse job postings.</p>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ field(form.email) }}
+    {{ field(form.password, password=true) }}
+    <button class="btn btn-primary btn-block btn-lg" type="submit">Sign in</button>
+  </form>
+  <p class="switch">New here? <a href="{{ url_for('signup') }}">Create an account</a></p>
+</div></div>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Detector{% endblock %}
+{% block content %}
+<div class="detector"><div class="container">
+  <div class="page-head">
+    <h2>Job posting analyser</h2>
+    <p>Hi {{ session.name.split()[0] }}, paste a job description below to check it.</p>
+  </div>
+  <div class="det-grid">
+    <div class="card">
+      <div class="chips">
+        <span style="color:var(--muted);font-size:.85rem;align-self:center">Try an example:</span>
+        <button type="button" class="chip" data-sample="s-real">Genuine</button>
+        <button type="button" class="chip" data-sample="s-fake">Suspicious</button>
+      </div>
+      <form method="post" id="detect-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <textarea id="jobtext" name="text" placeholder="Paste the full job description here…" required>{{ text }}</textarea>
+        <div class="toolbar">
+          <span id="count">0 words</span>
+          <div style="display:flex;gap:8px">
+            <button type="button" id="clear" class="btn btn-sm">Clear</button>
+            <button type="submit" id="detect-btn" class="btn btn-primary">Analyse posting</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="card result">
+      {% if result %}
+        {% set bad = result.label_id == 1 %}
+        {% set colour = '#fb5a6b' if bad else '#34d399' %}
+        <div class="gauge">
+          <svg width="210" height="210" viewBox="0 0 210 210" fill="none" stroke-width="16">
+            <circle class="bg" cx="105" cy="105" r="88"/>
+            <circle class="fg" cx="105" cy="105" r="88" stroke="{{ colour }}" data-pct="{{ result.percent }}"/>
+          </svg>
+          <div class="val"><b style="color:{{ colour }}">{{ result.percent }}%</b><span>fraud probability</span></div>
+        </div>
+        <div class="verdict {{ 'bad' if bad else 'ok' }}">{{ 'Likely a FAKE job' if bad else 'Looks NORMAL' }}</div>
+        <div class="meta">
+          <div><b>{{ result.label }}</b><span>Prediction</span></div>
+          <div><b>{{ result.confidence_pct }}%</b><span>Confidence</span></div>
+          <div><b>{{ result.words }}</b><span>Words read</span></div>
+        </div>
+        <div class="signals">
+          {% if result.signals %}
+            <h4>Red flags found ({{ result.signals|length }})</h4>
+            <ul>{% for s in result.signals %}<li>{{ s }}</li>{% endfor %}</ul>
+          {% else %}
+            <h4>Signals</h4><ul><li class="good">No common scam phrases detected.</li></ul>
+          {% endif %}
+        </div>
+        <p class="notice">Engine: {{ engine_name }}.{% if not engine_is_model %} Demo mode: train the ALBERT model and place it in <code>ORF_best_model/</code> for full accuracy.{% endif %} Always verify the employer independently and never pay to get a job.</p>
+      {% else %}
+        <div class="empty"><div class="big"></div><h3>Your result appears here</h3><p>Paste a posting or load an example, then press <b>Analyse posting</b>.</p></div>
+      {% endif %}
+    </div>
+  </div>
+</div></div>
+
+<script type="text/plain" id="s-real">Software Engineer – Backend (Python)
+Acme Analytics is hiring a Software Engineer to join our platform team in Chennai. You will design and maintain REST APIs, write unit tests, review code and collaborate with product managers and data scientists.
+Requirements: 2+ years of experience with Python and Flask or Django, solid knowledge of SQL, familiarity with Docker and CI pipelines. A B.E/B.Tech in Computer Science or equivalent is preferred.
+We offer a competitive salary, health insurance, learning budget and hybrid work. Apply through our careers page at acmeanalytics.com/careers. Interviews include a technical round and a culture conversation with the team.</script>
+<script type="text/plain" id="s-fake">URGENT HIRING!!! WORK FROM HOME - EARN Rs. 5000 PER DAY!!!
+No experience needed, freshers can apply. Direct selection without interview. Just pay a refundable registration fee of Rs. 1500 to confirm your slot. Limited seats, apply now!
+Send your Aadhaar copy and bank account details on WhatsApp +91 90000 00000 or mail hr.jobs.india@gmail.com. 100% job guarantee and guaranteed income every week.</script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Spot fake job postings{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div class="pill"><span class="dot {{ '' if engine_is_model else 'warn' }}"></span> Engine: {{ engine_name }}</div>
+    <h1>Stop job scams<br><span class="grad">before they stop you.</span></h1>
+    <p class="lead">Paste any job posting and our ALBERT transformer model tells you whether it looks genuine or fraudulent, with the red flags explained.</p>
+    <div class="cta">
+      {% if session.user %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('recomendation') }}">Open detector </a>
+      {% else %}
+        <a class="btn btn-primary btn-lg" href="{{ url_for('signup') }}">Create free account</a>
+        <a class="btn btn-lg" href="{{ url_for('signin') }}">Sign in</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container grid g4">
+    <div class="card stat reveal"><b>ALBERT</b><span>Transformer backbone</span></div>
+    <div class="card stat reveal"><b>~90%</b><span>Recall reported in study</span></div>
+    <div class="card stat reveal"><b>&lt; 1s</b><span>Typical prediction time</span></div>
+    <div class="card stat reveal"><b>2 classes</b><span>Normal · Fake Job</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sec-title reveal"><h2>Why ORF Shield?</h2><p>Online recruitment fraud costs job seekers money, data and trust.</p></div>
+    <div class="grid g3">
+      <div class="card hover reveal"><h3>Context-aware AI</h3><p>ALBERT reads the whole posting, not just keywords, to learn how fraudulent listings are worded.</p></div>
+      <div class="card hover reveal"><h3>Explained red flags</h3><p>Spots upfront fees, personal-email contacts, WhatsApp hiring, guaranteed-income promises and more.</p></div>
+      <div class="card hover reveal"><h3>Private &amp; secure</h3><p>Hashed passwords, CSRF protection and per-user history keep your searches your own.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sec-title reveal"><h2>Three steps</h2></div>
+    <div class="grid g3">
+      <div class="card reveal"><div class="step-n">STEP 01</div><h3>Sign in</h3><p>Create an account in seconds to unlock the detector and keep a history.</p></div>
+      <div class="card reveal"><div class="step-n">STEP 02</div><h3>Paste the posting</h3><p>Copy the job description from any portal, email or message.</p></div>
+      <div class="card reveal"><div class="step-n">STEP 03</div><h3>Get the verdict</h3><p>See the fraud probability, the confidence and the signals behind it.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container grid g2">
+    <div class="card reveal"><h3>Common warning signs</h3><br>
+      <ul class="list warn"><li>Asks for a registration, training or security fee</li><li>Interview only on WhatsApp or Telegram</li><li>Recruiter uses a Gmail / Yahoo address</li><li>"No experience needed, earn ₹5,000 a day"</li><li>Requests Aadhaar, bank or card details early</li></ul></div>
+    <div class="card reveal"><h3>Signs of a genuine posting</h3><br>
+      <ul class="list"><li>Clear role, responsibilities and requirements</li><li>Official company domain and careers page</li><li>Structured interview process</li><li>No payment is ever requested from you</li><li>Verifiable company presence and reviews</li></ul></div>
+  </div>
+</section>
+{% endblock %}

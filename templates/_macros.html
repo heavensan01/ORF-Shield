@@ -1,0 +1,11 @@
+{% macro field(f, password=false) %}
+<div class="field">
+  {{ f.label }}
+  {% if password %}
+    <div class="pw">{{ f(class_="input", placeholder="••••••••", autocomplete="current-password" if f.name=='password' else "new-password") }}<button type="button">Show</button></div>
+  {% else %}
+    {{ f(class_="input", placeholder=f.label.text) }}
+  {% endif %}
+  {% for e in f.errors %}<div class="err">{{ e }}</div>{% endfor %}
+</div>
+{% endmacro %}

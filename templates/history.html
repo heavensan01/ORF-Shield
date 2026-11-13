@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}History{% endblock %}
+{% block content %}
+<div class="detector"><div class="container">
+  <div class="page-head"><h2>Your analysis history</h2><p>The last {{ total }} posting{{ '' if total==1 else 's' }} you checked.</p></div>
+  <div class="grid g3" style="margin-bottom:22px">
+    <div class="card stat"><b>{{ total }}</b><span>Total checks</span></div>
+    <div class="card stat"><b style="color:var(--bad)">{{ fake }}</b><span>Flagged as fake</span></div>
+    <div class="card stat"><b style="color:var(--ok)">{{ genuine }}</b><span>Looked normal</span></div>
+  </div>
+  <div class="card">
+    {% if rows %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>When (UTC)</th><th>Posting</th><th>Verdict</th><th>Fraud prob.</th></tr></thead>
+      <tbody>{% for r in rows %}
+        <tr><td>{{ r.created_at }}</td><td class="snip">{{ r.snippet }}{{ '…' if r.snippet|length >= 160 }}</td>
+        <td><span class="tag {{ 'bad' if r.label=='Fake Job' else 'ok' }}">{{ r.label }}</span></td>
+        <td>{{ (r.p_fake*100)|round(1) }}%</td></tr>
+      {% endfor %}</tbody>
+    </table></div>
+    {% else %}
+    <div class="empty"><div class="big"></div><h3>No checks yet</h3><p>Analyse a job posting and it will show up here.</p><br><a class="btn btn-primary" href="{{ url_for('recomendation') }}">Open detector</a></div>
+    {% endif %}
+  </div>
+</div></div>
+{% endblock %}

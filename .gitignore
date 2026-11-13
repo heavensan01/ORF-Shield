@@ -1,0 +1,8 @@
+__pycache__/
+instance/
+results/
+logs/
+.env
+*.pyc
+ORF_best_model/*.safetensors
+ORF_best_model/*.bin

@@ -1,0 +1,10 @@
+# Extra packages for the ALBERT model and training (install on your PC / Colab, not on a free host)
+-r requirements.txt
+torch>=2.2
+transformers>=4.41
+sentencepiece>=0.2
+pandas>=2.0
+scikit-learn>=1.4
+accelerate>=0.30
+matplotlib>=3.8
+seaborn>=0.13
